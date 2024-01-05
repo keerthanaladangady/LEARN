@@ -11,7 +11,13 @@ export const login = async (req) => {
     let users = await pool.query('SELECT * FROM vw_user_master where code= $1', [code]);
     let user = users.rows[0];
     if (!user) {
-      throw "Invalid Code!!";
+      throw new ApplicationError(
+        StatusCodes.BAD_REQUEST_ERROR_CODE,
+        {
+            error: `Invalid Code!!`,
+        },
+        StatusMessages.BAD_REQUEST_MSG
+    );
     }
     if (bcrypt.compareSync(req.body.password, user.password)) {
       return {
