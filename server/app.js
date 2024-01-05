@@ -21,11 +21,11 @@ import supplier from "./routes/supplier/index.js";
 
 
 app.use("/api", authentication);
-app.use("/api/user", user);
-app.use("/api/maintenance", maintenance);
-app.use("/api/process", processRouter);
-app.use("/api/service", service);
-app.use("/api/supplier", supplier);
+app.use("/api/user", withAuth, user);
+app.use("/api/maintenance", withAuth, maintenance);
+app.use("/api/process", withAuth, processRouter);
+app.use("/api/service", withAuth, service);
+app.use("/api/supplier", withAuth, supplier);
 
 
 httpServer.listen(port, () => {

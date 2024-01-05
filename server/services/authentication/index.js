@@ -7,8 +7,8 @@ import { StatusCodes, StatusMessages } from '../../utils/constants.js';
 // Login Function
 export const login = async (req) => {
   try {
-    let code = req.query.code;
-    let users = await pool.query('SELECT * FROM vw_user_master where code= $1', [code])
+    let code = req.body.code;
+    let users = await pool.query('SELECT * FROM vw_user_master where code= $1', [code]);
     let user = users.rows[0];
     if (!user) {
       throw "Invalid Code!!";
@@ -37,7 +37,7 @@ export const login = async (req) => {
     );
     }
   } catch (error) {
-    console.error('Error wihle login : ', error);
+    console.error('Error while login : ', error);
     throw new ApplicationError(
       StatusCodes.SERVER_ERROR_CODE,
       { message: `Error while login : ${error.message}` },
